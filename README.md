@@ -31,6 +31,10 @@ Where region is the region you are looking to attain statistics for i.e. **DEFAU
 
 **NOTE** - This will create two globals **grafanametrics** and **grafanametrics1** Be mindful of the fact that these globals can quickly in size depending on the interval between statistics gathers.
 
+Install the requirements for the run the Grafana back end server process:
+
+    pip install -r requirements/requirements.txt
+
 
 
 
