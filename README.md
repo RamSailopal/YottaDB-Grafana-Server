@@ -20,7 +20,6 @@ Once this is set up, the next stage is to load the routines in the routines fold
 
     cd /usr/local
     git clone https://github.com/RamSailopal/YottaDB-Grafana-Server.git
-    source <path to yottadb install directory>/ydb_env_set
     cd YottaDB-Grafana-Server
     cp routines/* <path to YottaDB routines directory>
     <path to yottadb install directory>/ydb
