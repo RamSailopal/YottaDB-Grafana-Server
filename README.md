@@ -63,6 +63,31 @@ A cnt=all will return all records available
 
 **NOTE** The number of records returned will effect performance.
 
+These API endpoints can then be consumed by the Grafana YottaDB datasource plugin:
+
+https://github.com/RamSailopal/YottaDB-Grafana-Plugin
+
+# Custom Metric
+
+The **CUS** endpoint allows custom/bespoke metrics to be returned from the Yotta database.
+
+The endpoint calls a YottaDB function/routine using mg_python and then expects data in a specific format.
+
+Taking the **EXAMPLE** function in the **grafanaserver.m** routine:
+
+    EXAMPLE()
+    ;
+    ; Field/Data separator - "@"
+    ; Field separator - ","
+    ; Data separator - ","
+    ; Record separator - ";"
+    ; Key value separator - "#"
+    ;
+    ; Use $zdate($H,"YEAR-MM-DD")_"T"_$zdate($H,"24:60:SS") to get the current timestamp from M
+    ;
+    S txt="Time,Temperature@Time#"_$zdate($H,"YEAR-MM-DD")_"T00:00:00,Temperature#22;Time#"_$zdate($H-1,"YEAR-MM-DD")_"T00:00:00,Temperature#20;Time#"_$zdate($H-2,"YEAR-MM-DD")_"T00:00:00,Temperature#18;Time#"_$zdate($H-3,"YEAR-MM-DD")_"T00:00:00,Temperature#24;Time#"_$zdate($H-4,"YEAR-MM-DD")_"T00:00:00,Temperature#15"
+    quit (txt)
+
 
 
 
