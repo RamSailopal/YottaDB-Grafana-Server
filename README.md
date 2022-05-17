@@ -51,6 +51,18 @@ Further details relating to the metrics returned by the CUM and POt categories c
 
 https://docs.yottadb.com/ProgrammersGuide/commands.html#zshow
 
+The metrics for the individual categories will be exposed through 3 separate enpoints as demonstrated in the graphics below:
+
+![Alt text](Grafanaserver.JPG?raw=true "Backend server")
+
+Additional parameters can be passed for the region to attain metrics for and the number of records/objects to return i.e.
+
+http://192.168.240.21:5000?region=TEST&cnt=100
+
+A cnt=all will return all records available
+
+**NOTE** The number of records returned will effect performance.
+
 
 
 
