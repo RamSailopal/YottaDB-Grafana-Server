@@ -15,13 +15,12 @@ proc(region)
   .FOR  SET stat=$O(^gvstatinctot(region,tim,stat)) QUIT:stat=""  DO
   ..S ^grafanastats(region,$zdate($H,"YEAR-MM-DD")_"T"_$zdate($H,"24:60:SS")_".000Z",stat)=^gvstatinctot(region,tim,stat)
   QUIT
-JOB(region)
+JOB(region,secs)
+  I '$D(secs) S secs=60
   F  D
   .D proc(region)
-  .H 10
+  .H secs
   .Q 
-RUN(region)
-  J JOB^grafanaserver(region)
 EXAMPLE()
   ;
   ; Field/Data separator - "@"
