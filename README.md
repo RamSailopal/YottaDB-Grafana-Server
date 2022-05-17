@@ -51,7 +51,7 @@ Further details relating to the metrics returned by the CUM and POt categories c
 
 https://docs.yottadb.com/ProgrammersGuide/commands.html#zshow
 
-The metrics for the individual categories will be exposed through 3 separate enpoints as demonstrated in the graphics below:
+The metrics for the individual categories will be exposed through 3 separate endpoints as demonstrated in the graphic below:
 
 ![Alt text](Grafanaserver.JPG?raw=true "Backend server")
 
