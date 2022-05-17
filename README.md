@@ -90,6 +90,10 @@ Taking the **EXAMPLE** function in the **grafanaserver.m** routine:
     
 The text **Time,Temperature@Time#"_$zdate($H,"YEAR-MM-DD")_"T00:00:00,Temperature#22;Time#"_$zdate($H-1,"YEAR-MM-DD")_"T00:00:00,Temperature#20;Time#"_$zdate($H-2,"YEAR-MM-DD")_"T00:00:00,Temperature#18;Time#"_$zdate($H-3,"YEAR-MM-DD")_"T00:00:00,Temperature#24;Time#"_$zdate($H-4,"YEAR-MM-DD")_"T00:00:00,Temperature#15** is returned by the function to the back end server.
 
+The text before **@** represents the field headers each separated by **,** The text after **@** is the actual data. Each record in the data is separated with **;** and each key/value combination **,** The separator between the actual key and value is **#**
+
+
+
 
 
 
