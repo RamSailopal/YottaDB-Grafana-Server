@@ -34,6 +34,24 @@ Where region is the region you are looking to attain statistics for i.e. **DEFAU
 Install the requirements for the run the Grafana back end server process:
 
     pip install -r requirements/requirements.txt
+    
+With the mg_python dependancy installed as outlined in the mg_python Github page (see above) run the server process:
+
+    python yottametrics.py
+    
+# Metrics Returned
+
+Metrics will be returned in 3 categories:
+
+1) CUM - Cumulative metrics over time
+2) POT - Metrics in a single point of time
+3) CUS - This allows you to setup and call your own metrics
+
+Further details relating to the metrics returned by the CUM and POt categories can be found here:
+
+https://docs.yottadb.com/ProgrammersGuide/commands.html#zshow
+
+
 
 
 
