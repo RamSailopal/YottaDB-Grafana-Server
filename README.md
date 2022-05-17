@@ -25,7 +25,7 @@ Once this is set up, the next stage is to load the routines in the routines fold
     <path to yottadb install directory>/ydb
     ZL "gvstat.m"
     ZL "grafanaserver.m"
-    D RUN^grafanaserver(<region>,<secs>)
+    J JOB^grafanaserver(<region>,<secs>)
     
 Where region is the region you are looking to attain statistics for i.e. **DEFAULT** and secs is the interval between statistic gathers (default 10 seconds)
 
