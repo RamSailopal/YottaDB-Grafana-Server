@@ -57,7 +57,7 @@ The metrics for the individual categories will be exposed through 3 separate end
 
 Additional parameters can be passed for the region to attain metrics for and the number of records/objects to return i.e.
 
-http://192.168.240.21:5000?region=TEST&cnt=100
+http://192.168.240.21:5000/CUM?region=TEST&cnt=100
 
 A cnt=all will return all records available
 
@@ -115,12 +115,43 @@ Each entry is separated by a **,** i.e.:
 
 and each key/value combination **,** The separator between the actual key and value is **#** i.e.
 
-**Temperature**
+key -  **Temperature**
 
-**22**
+Value - **22**
 
+To call the example function/routine on the back end server using the CUS endpoint we would use example:
 
+http://192.168.240.21:5000/CUS?dbfunc=EXAMPLE^grafanaserver
 
+The above referenced separators are the default configured and separators but separators can be reconfigured so that they are referenced when making the API call to the back end server.
+
+Taking the example of the following seperators:
+
+Field/Data separator - "^"
+
+Field separator - "*"
+
+Data separator - "|"
+
+Record separator - "#"
+ 
+Key value separator - "@"
+
+When making the API request we would send additional parameters and so:
+
+http://192.168.240.21:5000/CUS?dbfunc=EXAMPLE^grafanaserver&fdsep=^&datasep=|&fieldsep=*&recordsep=#&ketvalsep=@
+
+The following URL parameters therefore translate as follows:
+
+**fdsep** - Field/Data separator
+
+**datasep** - Data separator
+
+**fieldsep** - Field separator
+
+**recordsep** - Record separator
+
+**keyvalsep** - Key value separator
 
 
 
