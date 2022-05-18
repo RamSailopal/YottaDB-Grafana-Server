@@ -4,6 +4,8 @@ The back-end components of the YottaDB metrics Grafana plugin
 
 This back end server running using Python Flask, takes data out of YottaDB globals and then converts then to a format that can be interpreted by Grafana through API end points.
 
+Details of the YottaDB Grafana plugin can be found here - https://github.com/RamSailopal/YottaDB-Grafana-Plugin
+
 # Setting Up
 
 The infrastructure uses **Chris Munt's** **mg_python** and so this will first need setting up both on the YottaDB and also the server running this Grafana backend server:
@@ -51,6 +53,113 @@ Further details relating to the metrics returned by the CUM and POt categories c
 
 https://docs.yottadb.com/ProgrammersGuide/commands.html#zshow
 
+The metrics for the individual categories will be exposed through 3 separate endpoints as demonstrated in the graphic below:
+
+![Alt text](Grafanaserver.JPG?raw=true "Backend server")
+
+Additional parameters can be passed for the region to attain metrics for and the number of records/objects to return i.e.
+
+http://192.168.240.21:5000/CUM?region=TEST&cnt=100
+
+A cnt=all will return all records available
+
+**NOTE** The number of records returned will effect performance.
+
+These API endpoints can then be consumed by the Grafana YottaDB datasource plugin:
+
+https://github.com/RamSailopal/YottaDB-Grafana-Plugin
+
+# Custom Metric
+
+The **CUS** endpoint allows custom/bespoke metrics to be returned from the Yotta database.
+
+The endpoint calls a YottaDB function/routine using mg_python and then expects data in a specific format.
+
+Taking the **EXAMPLE** function in the **grafanaserver.m** routine:
+
+    EXAMPLE()
+    ;
+    ; Field/Data separator - "@"
+    ; Field separator - ","
+    ; Data separator - ","
+    ; Record separator - ";"
+    ; Key value separator - "#"
+    ;
+    ; Use $zdate($H,"YEAR-MM-DD")_"T"_$zdate($H,"24:60:SS") to get the current timestamp from M
+    ;
+    S txt="Time,Temperature@Time#"_$zdate($H,"YEAR-MM-DD")_"T00:00:00,Temperature#22\;Time#"_$zdate($H-1,"YEAR-MM-DD")_"T00:00:00,Temperature#20\;Time#"_$zdate($H-2,"YEAR-MM-DD")_"T00:00:00,Temperature#18\;Time#"_$zdate($H-3,"YEAR-MM-DD")_"T00:00:00,Temperature#24\;Time#"_$zdate($H-4,"YEAR-MM-DD")_"T00:00:00,Temperature#15"
+    quit (txt)
+    
+The text:
+
+**Time,Temperature@Time#"_$zdate($H,"YEAR-MM-DD")_"T00:00:00,Temperature#22\;Time#"_$zdate($H-1,"YEAR-MM-DD")_"T00:00:00,Temperature#20\;Time#"_$zdate($H-2,"YEAR-MM-DD")_"T00:00:00,Temperature#18\;Time#"_$zdate($H-3,"YEAR-MM-DD")_"T00:00:00,Temperature#24\;Time#"_$zdate($H-4,"YEAR-MM-DD")_"T00:00:00,Temperature#15** 
+
+is returned by the function to the back end server.
+
+The text before **@** represents the field headers:
+
+**Time,Temperature**
+
+each separated by **,**:
+
+**Time**
+
+**Temperature**
+
+The text after **@** is the actual data:
+
+**Time#"_$zdate($H,"YEAR-MM-DD")_"T00:00:00,Temperature#22\;Time#"_$zdate($H-1,"YEAR-MM-DD")_"T00:00:00,Temperature#20\;Time#"_$zdate($H-2,"YEAR-MM-DD")_"T00:00:00,Temperature#18\;Time#"_$zdate($H-3,"YEAR-MM-DD")_"T00:00:00,Temperature#24\;Time#"_$zdate($H-4,"YEAR-MM-DD")_"T00:00:00,Temperature#15**
+
+
+Each record in the data is separated with **;** i.e:
+
+**Time#"_$zdate($H,"YEAR-MM-DD")_"T00:00:00,Temperature#22**
+
+**NOTE - The last record doesn't have a trailing ;**
+
+Each entry is separated by a **,** i.e.:
+
+**Temperature#22**
+
+and each key/value combination **,** The separator between the actual key and value is **#** i.e.
+
+key -  **Temperature**
+
+Value - **22**
+
+To call the example function/routine on the back end server using the CUS endpoint we would use example:
+
+http://192.168.240.21:5000/CUS?dbfunc=EXAMPLE^grafanaserver
+
+The above referenced separators are the default configured and separators but separators can be reconfigured so that they are referenced when making the API call to the back end server.
+
+Taking the example of the following seperators:
+
+Field/Data separator - "^"
+
+Field separator - "*"
+
+Data separator - "|"
+
+Record separator - "#"
+ 
+Key value separator - "@"
+
+When making the API request we would send additional parameters and so:
+
+http://192.168.240.21:5000/CUS?dbfunc=EXAMPLE^grafanaserver&fdsep=^&datasep=|&fieldsep=*&recordsep=#&ketvalsep=@
+
+The following URL parameters therefore translate as follows:
+
+**fdsep** - Field/Data separator
+
+**datasep** - Data separator
+
+**fieldsep** - Field separator
+
+**recordsep** - Record separator
+
+**keyvalsep** - Key value separator
 
 
 
