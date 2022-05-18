@@ -53,7 +53,12 @@ Install the requirements for the run the Grafana back end server process:
     pip install -r requirements/requirements.txt
     
 With the mg_python dependancy installed as outlined in the mg_python Github page (see above) run the server process:
-
+ 
+ 
+    export YOTTAADD=<address of yottaDB server>
+    export YOTTAPORT=7041
+    export LC_ALL=en_US.utf-8
+    export LANG=en_US.utf-8
     python yottametrics.py
     
 # Metrics Returned
