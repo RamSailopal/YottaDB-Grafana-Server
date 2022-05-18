@@ -4,6 +4,8 @@ The back-end components of the YottaDB metrics Grafana plugin
 
 This back end server running using Python Flask, takes data out of YottaDB globals and then converts then to a format that can be interpreted by Grafana through API end points.
 
+Details of the YottaDB Grafana plugin can be found here - https://github.com/RamSailopal/YottaDB-Grafana-Plugin
+
 # Setting Up
 
 The infrastructure uses **Chris Munt's** **mg_python** and so this will first need setting up both on the YottaDB and also the server running this Grafana backend server:
