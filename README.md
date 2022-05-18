@@ -179,9 +179,9 @@ The following URL parameters therefore translate as follows:
 
 # References
 
-YottaDB - https://yottadb.com/
+**YottaDB** - https://yottadb.com/
 
-mg_python - https://github.com/chrisemunt/mg_python
+**mg_python** - https://github.com/chrisemunt/mg_python
 
 
 
