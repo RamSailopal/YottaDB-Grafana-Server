@@ -1,10 +1,13 @@
 import mg_python
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_compress import Compress
 import os
 
+compress = Compress()
 app = Flask(__name__)
 CORS(app, resources={r"*": {"origins": "*"}})
+compress.init_app(app)
 mg_python.m_set_host(0, os.environ.get('YOTTAADD'), int(os.environ.get('YOTTAPORT')), "", "")
 
 @app.route('/CUM')
@@ -194,7 +197,7 @@ def get_pot_metrics():
           ]
 
    tmstamp = mg_python.m_previous(0, "^grafanastats1", region, "")
-   while (tmstamp != "" and cnt < 60):
+   while (tmstamp != "" and cnt < limit):
        cnt=cnt+1
        metrics_data = {}
        metrics_data['time'] = tmstamp[0:10] +  " " + tmstamp[11:19]
