@@ -177,6 +177,13 @@ The following URL parameters therefore translate as follows:
 **keyvalsep** - Key value separator
 
 
+# References
+
+YottaDB - https://yottadb.com/
+
+mg_python - https://github.com/chrisemunt/mg_python
+
+
 
 
 
