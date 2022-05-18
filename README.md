@@ -113,6 +113,8 @@ Each record in the data is separated with **;** i.e:
 
 **Time#"_$zdate($H,"YEAR-MM-DD")_"T00:00:00,Temperature#22**
 
+**NOTE - The last record doesn't have a trailing ;**
+
 Each entry is separated by a **,** i.e.:
 
 **Temperature#22**
