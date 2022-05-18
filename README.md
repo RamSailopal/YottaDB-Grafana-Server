@@ -8,6 +8,8 @@ Details of the YottaDB Grafana plugin can be found here - https://github.com/Ram
 
 # Setting Up
 
+**YottaDB server**
+
 The infrastructure uses **Chris Munt's** **mg_python** and so this will first need setting up both on the YottaDB and also the server running this Grafana backend server:
 
 https://github.com/chrisemunt/mg_python
@@ -16,7 +18,7 @@ On completion of the steps outlined, make sure that a yottadb process is listeni
    
      ss -lnp | grep 7041
      
-Also ensure that the mg_python Python library is installed as outlined in the guide.
+Ensure that the mg_python Python library is installed as outlined in the guide.
 
 Once this is set up, the next stage is to load the routines in the routines folder into your YottaDB environment:
 
@@ -27,11 +29,24 @@ Once this is set up, the next stage is to load the routines in the routines fold
     <path to yottadb install directory>/ydb
     ZL "gvstat.m"
     ZL "grafanaserver.m"
-    J JOB^grafanaserver(<region>,<secs>)
+    D START^grafanaserver(<region>,<secs>)
     
 Where region is the region you are looking to attain statistics for i.e. **DEFAULT** and secs is the interval between statistic gathers (default 10 seconds)
 
 **NOTE** - This will create two globals **grafanametrics** and **grafanametrics1** Be mindful of the fact that these globals can quickly in size depending on the interval between statistics gathers.
+
+Statistics can be purged at any time by issuing the command:
+
+    D PURGE^grafanaserver(<type>,<region>)
+    
+Where type is the type of metrics to purge, **CUM** to cumulative and **POT** for point in time
+
+Other options:
+
+    D STOP^grafanaserver(<region>) # Stop the server for a given region
+    D STATUSgrafanaserver(<region>) # Check the status of the server for a given region
+
+**Grafana Back end server**
 
 Install the requirements for the run the Grafana back end server process:
 
