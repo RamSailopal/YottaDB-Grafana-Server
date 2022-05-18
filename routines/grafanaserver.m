@@ -16,11 +16,45 @@ proc(region)
   ..S ^grafanastats(region,$zdate($H,"YEAR-MM-DD")_"T"_$zdate($H,"24:60:SS")_".000Z",stat)=^gvstatinctot(region,tim,stat)
   QUIT
 JOB(region,secs)
+  S ^grafanaconf("PID",region)=$J
   I '$D(secs) S secs=60
+  S TYPE=""
   F  D
+  .I $D(^grafanaconf("PURGE"))  D
+  ..F  S TYPE=$O(^grafanaconf("PURGE",region,TYPE)) Q:TYPE=""  D
+  ...I TYPE="CUM" K ^grafanastats(region) K ^grafanaconf("PURGE",region)
+  ...E  I TYPE="POT" K ^grafanastats(region) K ^grafanaconf("PURGE",region)
+  ...Q
+  ..Q
   .D proc(region)
   .H secs
   .Q 
+  Quit
+START(region,secs) 
+  I '$D(secs) S secs=60
+  I '$D(region) S region="DEFAULT"
+  J JOB^grafanaserver(region,secs)
+  Quit
+STOP(region)
+  I '$D(region) W !,"Please enter a region to stop the server for" Q
+  I '$D(^grafanaconf("PID",region)) W !,"Grafana server is not running"
+  E  D
+  .S PID=^grafanaconf("PID",region)
+  .S CMD="kill -9 "_PID
+  .zsystem CMD
+  .K ^grafanaconf("PID",region)
+  Quit
+STATUS(region)
+  I '$D(region) W !,"Please enter a region to check the server status for" Q
+  I $D(^grafanaconf("PID",region)) W !,"Grafana server is running as process - "_^grafanaconf("PID",region)
+  E  W !,"Grafana server is not running"
+  Quit
+PURGE(TYPE,region)
+  I '$D(TYPE) W !,"Please enter CUM for Cumulative stats or POT for point in time stats"
+  I (TYPE'="CUM")&(TYPE'="POT") W !,"Please enter CUM for Cumulative stats or POT for point in time stats"
+  I '$D(region) W !,"Please enter a region for stats to delete"
+  S ^grafanaconf("PURGE",region,TYPE)=1
+  Quit
 EXAMPLE()
   ;
   ; Field/Data separator - "@"
