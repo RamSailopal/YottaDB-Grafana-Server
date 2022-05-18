@@ -44,7 +44,7 @@ Where type is the type of metrics to purge, **CUM** to cumulative and **POT** fo
 Other options:
 
     D STOP^grafanaserver(<region>) # Stop the server for a given region
-    D STATUSgrafanaserver(<region>) # Check the status of the server for a given region
+    D STATUS^grafanaserver(<region>) # Check the status of the server for a given region
 
 **Grafana Back end server**
 
