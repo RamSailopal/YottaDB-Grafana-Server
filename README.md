@@ -76,9 +76,9 @@ Additional parameters can be passed for the region to attain metrics for and the
 
 http://192.168.240.21:5000/CUM?region=TEST&cnt=100
 
-A cnt=all will return all records available
+A cnt=**all** will return all records available
 
-**NOTE** The number of records returned will effect performance.
+**NOTE** Although http response compression has been implemented, the number of records returned will effect performance.
 
 These API endpoints can then be consumed by the Grafana YottaDB datasource plugin:
 
